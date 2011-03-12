@@ -182,7 +182,7 @@ Caman.manip.hazyDays = function () {
     this.copyParent();
     
     this.filter.channels({red: 5});
-    this.filter.heavyRadialBlur();
+    this.filter.stackBlur(15);
   });
   
   this.newLayer(function () {
@@ -205,7 +205,7 @@ Caman.manip.hazyDays = function () {
     this.filter.curves('g', [0, 40], [128, 128], [128, 128], [255, 215]);
     this.filter.curves('b', [0, 40], [128, 128], [128, 128], [255, 215]);
     
-    this.filter.gaussianBlur();
+    this.filter.stackBlur(5);
   });
   
   this.curves('r', [20, 0], [128, 158], [128, 128], [235, 255]);
@@ -271,7 +271,7 @@ Caman.manip.nostalgia = function () {
     this.copyParent();
     this.opacity(55);
     
-    this.filter.gaussianBlur();
+    this.filter.stackBlur(10);
   });
     
   return this.vignette("50%", 30);
