@@ -300,4 +300,35 @@ Caman.manip.hemingway = function () {
   return this;
 };
 
+Caman.manip.loveBug = function () {
+  this.greyscale();
+  this.colorize('#005ef7', 30);
+  
+  this.newLayer(function () {
+    this.setBlendingMode('multiply');
+    this.opacity(30);
+    this.copyParent();
+    
+    this.filter.gamma(1.6);
+  });
+  
+  this.contrast(10);
+  
+  this.newLayer(function () {
+    this.setBlendingMode('exclusion');
+    this.opacity(40);
+    this.copyParent();
+    
+    this.filter.gamma(1.4);    
+    this.filter.colorize('#ff00d0', 50);
+    this.filter.vignette("50%", 40);
+    this.filter.stackBlur(3);
+  });
+  
+  this.exposure(15);
+  this.vignette("40%", 20);
+  
+  return this;
+};
+
 }(Caman));
