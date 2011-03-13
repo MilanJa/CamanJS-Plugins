@@ -11,18 +11,26 @@ if (!Caman && typeof exports == "object") {
 (function (Caman) {
 
   var vignetteFilters = {
-    brightness: function (rgba, amt, strength) {
-      rgba.r = rgba.r - (rgba.r * amt * strength);
-      rgba.g = rgba.g - (rgba.g * amt * strength);
-      rgba.b = rgba.b - (rgba.b * amt * strength);
+    brightness: function (rgba, amt, opts) {
+      rgba.r = rgba.r - (rgba.r * amt * opts.strength);
+      rgba.g = rgba.g - (rgba.g * amt * opts.strength);
+      rgba.b = rgba.b - (rgba.b * amt * opts.strength);
       
       return rgba;
     },
     
-    gamma: function (rgba, amt, strength) {
-      rgba.r = Math.pow(rgba.r / 255, (10 * amt * strength) + 1) * 255;
-      rgba.g = Math.pow(rgba.g / 255, (10 * amt * strength) + 1) * 255;
-      rgba.b = Math.pow(rgba.b / 255, (10 * amt * strength) + 1) * 255;
+    gamma: function (rgba, amt, opts) {
+      rgba.r = Math.pow(rgba.r / 255, Math.max(10 * amt * opts.strength, 1)) * 255;
+      rgba.g = Math.pow(rgba.g / 255, Math.max(10 * amt * opts.strength, 1)) * 255;
+      rgba.b = Math.pow(rgba.b / 255, Math.max(10 * amt * opts.strength, 1)) * 255;
+      
+      return rgba;
+    },
+    
+    colorize: function (rgba, amt, opts) {
+      rgba.r -= (rgba.r - opts.color.r) * amt;
+      rgba.g -= (rgba.g - opts.color.g) * amt;
+      rgba.b -= (rgba.b - opts.color.b) * amt;
       
       return rgba;
     }
@@ -127,6 +135,11 @@ if (!Caman && typeof exports == "object") {
       };
     }
     
+    if (typeof opts.cornerRadius === "string") {
+      // Variable corner radius
+      opts.cornerRadius = (opts.size.width / 2) * (parseInt(opts.cornerRadius, 10) / 100);
+    }
+    
     opts.strength /= 100;
     
     // Since pixels are discreet, force size to be an int
@@ -198,7 +211,12 @@ if (!Caman && typeof exports == "object") {
         amt = (radialDist - opts.cornerRadius) / opts.maxDist;
       }
       
-      return vignetteFilters[opts.method](rgba, amt, opts.strength);
+      if (amt < 0) {
+        // Inside of rounded corner
+        return rgba;
+      }
+      
+      return vignetteFilters[opts.method](rgba, amt, opts);
     });
   };
 
