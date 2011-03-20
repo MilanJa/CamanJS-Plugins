@@ -302,7 +302,7 @@ Caman.manip.hemingway = function () {
 
 Caman.manip.loveBug = function () {
   this.greyscale();
-  this.colorize('#005ef7', 30);
+  this.colorize('#005ef7', 10);
   
   this.newLayer(function () {
     this.setBlendingMode('multiply');
@@ -316,17 +316,34 @@ Caman.manip.loveBug = function () {
   
   this.newLayer(function () {
     this.setBlendingMode('exclusion');
-    this.opacity(40);
+    this.opacity(50);
     this.copyParent();
     
     this.filter.gamma(1.4);    
     this.filter.colorize('#ff00d0', 50);
-    this.filter.vignette("50%", 40);
+    this.filter.rectangularVignette({
+      size: {
+        width: "80%",
+        height: "60%"
+      },
+      strength: 60,
+      cornerRadius: "70%",
+      method: "brightness"
+    });
     this.filter.stackBlur(3);
   });
   
   this.exposure(15);
-  this.vignette("40%", 20);
+  this.rectangularVignette({
+    size: {
+      width: "90%",
+      height: "70%"
+    },
+    strength: 30,
+    cornerRadius: "70%",
+    method: "colorize",
+    color: "#001138"
+  });
   
   return this;
 };
