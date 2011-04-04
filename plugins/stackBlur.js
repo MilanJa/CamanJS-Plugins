@@ -40,7 +40,12 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
-/*global Caman: true */
+/*global Caman: true, exports: true */
+if (!Caman && typeof exports == "object") {
+  var Caman = {manip:{}};
+  exports.plugins = Caman.manip;
+}
+
 (function (Caman) {
 
 var mul_table = [
