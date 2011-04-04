@@ -356,5 +356,26 @@ OTHER DEALINGS IN THE SOFTWARE.
     var gradient = getLinearGradientMap(this.dimensions.width, this.dimensions.height, opts.center.x, opts.center.y, opts.angle, opts.focusWidth, true);
     return this.processPlugin("compoundBlur", [gradient, opts.startRadius, opts.radiusFactor, opts.steps]);
   };
+  
+  Caman.manip.vignetteBlur = function (opts) {
+    var self = this;
+    var defaults = {
+      size: 50,
+      center: {x: self.dimensions.width / 2, y: self.dimensions.height / 2},
+      startRadius: 3,
+      radiusFactor: 1.5,
+      steps: 3
+    };
+    
+    opts = Caman.extend(defaults, opts);
+    
+    var max = (this.dimensions.width < this.dimensions.height) ? this.dimensions.height : this.dimensions.width;
+    var radius1 = (max / 2) - opts.size;
+    var radius2 = (max / 2);
+    
+    console.log(radius1, radius2);
+    var gradient = getRadialGradientMap(this.dimensions.width, this.dimensions.height, opts.center.x, opts.center.y, radius1, radius2);
+    return this.processPlugin("compoundBlur", [gradient, opts.startRadius, opts.radiusFactor, opts.steps]);
+  };
 
 }(Caman));

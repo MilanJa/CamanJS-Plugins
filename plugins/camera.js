@@ -201,12 +201,15 @@ if (!Caman && typeof exports == "object") {
         radialDist = Caman.distance(loc.x, loc.y, opts.corners[0].x, opts.corners[0].y);
         amt = (radialDist - opts.cornerRadius) / opts.maxDist;
       } else if (loc.x >= opts.corners[1].x && loc.y >= opts.corners[1].y) {
+        // top-right corner
         radialDist = Caman.distance(loc.x, loc.y, opts.corners[1].x, opts.corners[1].y);
         amt = (radialDist - opts.cornerRadius) / opts.maxDist;
       } else if (loc.x >= opts.corners[2].x && loc.y <= opts.corners[2].y) {
+        // bottom-right corner
         radialDist = Caman.distance(loc.x, loc.y, opts.corners[2].x, opts.corners[2].y);
         amt = (radialDist - opts.cornerRadius) / opts.maxDist;
       } else if (loc.x <= opts.corners[3].x && loc.y <= opts.corners[3].y) {
+        // bottom-left corner
         radialDist = Caman.distance(loc.x, loc.y, opts.corners[3].x, opts.corners[3].y);
         amt = (radialDist - opts.cornerRadius) / opts.maxDist;
       }
